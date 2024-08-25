@@ -2,64 +2,47 @@ package com.bitohur.thermamaggot
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.viewpager2.widget.ViewPager2
-import me.relex.circleindicator.CircleIndicator3
+import androidx.fragment.app.Fragment
+import com.bitohur.thermamaggot.databinding.ActivityMainBinding
+import com.bitohur.thermamaggot.fragment.HistoryFragment
+import com.bitohur.thermamaggot.fragment.HomeFragment
+import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
-    private var temperatureList = mutableListOf<String>()
-    private var humidityList = mutableListOf<String>()
-    private var floorListTherma = mutableListOf<String>()
-
-    private var fanList = mutableListOf<String>()
-    private var lampList = mutableListOf<String>()
-    private var pumpList = mutableListOf<String>()
-    private var floorListTools = mutableListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val viewPager2Therma = findViewById<ViewPager2>(R.id.view_pager)
-        val viewPager2Tools = findViewById<ViewPager2>(R.id.view_pager_tools)
+        val bottomNavigation = binding.bottomNavigation
 
-        postToListTherma()
-        postToListTools()
+        bottomNavigation.add(
+            CurvedBottomNavigation.Model(1, "Home", R.drawable.ic_home)
+        )
 
-        viewPager2Therma.adapter = ViewPagerTehrmaAdapter(temperatureList, humidityList, floorListTherma)
-        viewPager2Therma.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        bottomNavigation.add(
+            CurvedBottomNavigation.Model(2, "Riwayat    ", R.drawable.ic_history)
+        )
 
-        viewPager2Tools.adapter = ViewPagerToolsAdapter(fanList, lampList, pumpList, floorListTools)
-        viewPager2Tools.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
-        val indicator = findViewById<CircleIndicator3>(R.id.dot_indicator)
-        indicator.setViewPager(viewPager2Therma)
-
-        val indicatorTools = findViewById<CircleIndicator3>(R.id.dot_indicator_tools)
-        indicatorTools.setViewPager(viewPager2Tools)
-    }
-
-    private fun addToListTherma(temperature: String, humidity: String, floor: String) {
-        temperatureList.add(temperature)
-        humidityList.add(humidity)
-        floorListTherma.add(floor)
-    }
-
-    private fun addToListTools(fan: String, lamp: String, pump: String, floor: String) {
-        lampList.add(lamp)
-        fanList.add(fan)
-        pumpList.add(pump)
-        floorListTools.add(floor)
-    }
-
-    private fun postToListTherma() {
-        for (i in 1..3) {
-            addToListTherma((10 + i).toString()+"C", (50 + i).toString()+"%", "Lantai $i")
+        bottomNavigation.setOnClickMenuListener {
+            when (it.id) {
+                1 -> {
+                    replaceFragment(HomeFragment())
+                }
+                2 -> {
+                    replaceFragment(HistoryFragment())
+                }
+            }
         }
+
+        replaceFragment(HomeFragment())
+        bottomNavigation.show(1)
     }
 
-    private fun postToListTools() {
-        for (i in 1..3) {
-            addToListTools("On","OFF", "ON", "Lantai $i")
-        }
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }

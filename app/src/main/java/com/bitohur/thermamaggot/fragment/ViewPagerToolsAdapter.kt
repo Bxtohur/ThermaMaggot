@@ -1,4 +1,4 @@
-package com.bitohur.thermamaggot
+package com.bitohur.thermamaggot.fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -19,7 +19,7 @@ class ViewPagerToolsAdapter(
         return Pager2ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewPagerToolsAdapter.Pager2ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: Pager2ViewHolder, position: Int) {
         holder.binding.tvValueFan.text = fan[position]
         holder.binding.tvValueLamp.text = lamp[position]
         holder.binding.tvValuePump.text = pump[position]

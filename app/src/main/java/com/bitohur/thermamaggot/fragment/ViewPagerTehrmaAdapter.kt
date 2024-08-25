@@ -1,4 +1,4 @@
-package com.bitohur.thermamaggot
+package com.bitohur.thermamaggot.fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
