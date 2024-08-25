@@ -1,5 +1,6 @@
 package com.bitohur.thermamaggot.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -13,8 +14,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bitohur.thermamaggot.FloorActivity
 import com.bitohur.thermamaggot.R
 import com.bitohur.thermamaggot.databinding.FragmentHomeBinding
-import com.google.firebase.database.*
-import me.relex.circleindicator.CircleIndicator3
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -83,6 +88,7 @@ class HomeFragment : Fragment() {
         val sensorRef = database.child("sensor")
 
         sensorRef.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 temperatureList.clear()
                 humidityList.clear()
@@ -94,7 +100,12 @@ class HomeFragment : Fragment() {
                     val humidity = floorSnapshot.child("kelembapan").getValue(Double::class.java) ?: 0.0
 
                     // Add data to the lists
-                    addToListTherma("${temperature}\u00B0C", "${humidity}%", formatFloor(floor).capitalize())
+                    addToListTherma("${temperature}\u00B0C", "${humidity}%",
+                        formatFloor(floor).replaceFirstChar {
+                            if (it.isLowerCase()) it.titlecase(
+                                Locale.getDefault()
+                            ) else it.toString()
+                        })
                 }
 
                 Log.d("HomeFragment", "Temperature: $temperatureList, Humidity: $humidityList, Floor: $floorListTherma")
@@ -114,6 +125,7 @@ class HomeFragment : Fragment() {
         val controlRef = database.child("kontrolsistem")
 
         controlRef.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 fanList.clear()
                 lampList.clear()
@@ -129,7 +141,12 @@ class HomeFragment : Fragment() {
                         val lamp = if (floorSnapshot.child("lampu${floorKey.last()}").getValue(Boolean::class.java) == true) "ON" else "OFF"
                         val pump = if (floorSnapshot.child("pompa${floorKey.last()}").getValue(Boolean::class.java) == true) "ON" else "OFF"
 
-                        addToListTools(fan, lamp, pump, formatFloor(floorKey).capitalize())
+                        addToListTools(fan, lamp, pump,
+                            formatFloor(floorKey).replaceFirstChar {
+                                if (it.isLowerCase()) it.titlecase(
+                                    Locale.getDefault()
+                                ) else it.toString()
+                            })
                     }
                     kontrolOtomatis = snapshot.child("kontrolotomatis").getValue(Boolean::class.java)
                 }
