@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_therma"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/green_2st"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_monitoring_thermal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_background"
+            android:gravity="center_vertical"
+            android:padding="18dp"
+            android:text="Monitoring Keadaan Ruangan"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/dot_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="10dp"
+            app:ci_drawable="@drawable/indicator_dot_selected"
+            app:ci_drawable_unselected="@drawable/indicator_dot_unselected"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@id/dot_indicator"
+            app:layout_constraintTop_toBottomOf="@id/tv_monitoring_thermal" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/green_2st"
+        app:layout_constraintTop_toBottomOf="@id/cl_therma">
+
+        <TextView
+            android:id="@+id/tv_monitoring_tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_background"
+            android:gravity="center_vertical"
+            android:padding="18dp"
+            android:text="Monitoring Keadaan Alat"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/dot_indicator_tools"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginBottom="10dp"
+            app:ci_drawable="@drawable/indicator_dot_selected"
+            app:ci_drawable_unselected="@drawable/indicator_dot_unselected"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager_tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@id/dot_indicator_tools"
+            app:layout_constraintTop_toBottomOf="@id/tv_monitoring_tools" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/manual_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rounded_background_active"
+        android:gravity="center"
+        android:paddingVertical="10dp"
+        android:text="Kontrol Manual"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/cl_tools" />
+
+    <TextView
+        android:id="@+id/auto_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_background_active"
+        android:gravity="center"
+        android:paddingVertical="10dp"
+        android:text="Kontrol Otomatis"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/manual_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
